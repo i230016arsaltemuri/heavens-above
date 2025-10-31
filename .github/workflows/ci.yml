@@ -8,9 +8,9 @@ on:
 
 jobs:
   lint-and-test:
-    name: Linting
+    name: Test Job
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -23,5 +23,5 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
-        run: npm test
+      - name: Run test script
+        run: npm test # This will run the script you added to package.json
