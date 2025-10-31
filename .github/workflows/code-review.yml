@@ -1,0 +1,22 @@
+name: 5. Code Review
+
+on:
+  pull_request: # Only runs on pull requests
+    branches: [ main ]
+
+jobs:
+  security-scan:
+    name: Trivy Vulnerability Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner (Filesystem)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'       # Scan the filesystem
+          scan-ref: '.'         # Scan the entire repo
+          ignore-unfixed: true  # Don't fail for vulnerabilities with no fix
+          format: 'table'       # Output results as a table in the log
