@@ -1,0 +1,27 @@
+name: 1. Continuous Integration (CI)
+
+on:
+  push:
+    branches: [ main ] # Triggers on push to main
+  pull_request:
+    branches: [ main ] # Triggers on pull request to main
+
+jobs:
+  lint-and-test:
+    name: Linting
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Use a current LTS version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run linter
+        run: npm run lint # This script is defined in package.json
