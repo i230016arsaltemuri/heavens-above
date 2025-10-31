@@ -8,20 +8,33 @@ on:
 
 jobs:
   lint-and-test:
-    name: Test Job
+    name: Lint, Test, and Validate Code
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout repository
+      - name: 📥 Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: 🟢 Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20' # Use a current LTS version
+          cache: 'npm' # Cache npm dependencies for faster builds
 
-      - name: Install dependencies
-        run: npm install
+      - name: 📦 Install dependencies
+        run: npm ci # Use npm ci for cleaner installs in CI
 
-      - name: Run test script
-        run: npm test # This will run the script you added to package.json
+      - name: 🔍 Run ESLint (Code Linting)
+        run: npm run lint
+        continue-on-error: false # Fail the workflow if linting fails
+
+      - name: ✅ Run Tests (Syntax Validation)
+        run: npm test
+
+      - name: 📊 Display success message
+        if: success()
+        run: echo "✅ All CI checks passed successfully!"
+
+      - name: ❌ Display failure message
+        if: failure()
+        run: echo "❌ CI checks failed. Please review the errors above."
