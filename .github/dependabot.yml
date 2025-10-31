@@ -1,0 +1,10 @@
+version: 2
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: "npm"
+    directory: "/" # Location of package.json
+    schedule:
+      interval: "weekly" # Check for updates weekly
+    open-pull-requests-limit: 5
+    reviewers:
+      - "i230016arsaltemuri" # Assigns you as the reviewer
