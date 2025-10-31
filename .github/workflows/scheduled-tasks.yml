@@ -1,0 +1,30 @@
+name: 3. Scheduled Tasks
+
+on:
+  workflow_dispatch: # Allows manual triggering from the Actions tab
+  schedule:
+    - cron: '0 5 * * *' # Runs every day at 05:00 UTC
+
+jobs:
+  scheduled-lint:
+    name: Daily Lint Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run linter
+        run: npm run lint
+
+      - name: Report status
+        if: ${{ always() }} # Runs even if previous steps fail
+        run: echo "Scheduled lint check completed with status ${{ job.status }}."
