@@ -2,7 +2,7 @@ name: 6. Deploy Documentation to GitHub Pages
 
 on:
   push:
-    branches: [ main ] # Trigger on push to main
+    branches: [ main ] # Trigger only on push to main
 
 # Grant permissions for deployment
 permissions:
@@ -17,22 +17,22 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
+      
       # This project is static, no build step needed.
-
+      
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v4
-
+      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload the entire root directory ('.')
           path: '.' 
-
+      
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
